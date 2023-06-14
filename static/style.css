@@ -1,0 +1,154 @@
+/* === Globální styly === */
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  max-width: 90ch;
+  padding: 1.5rem;
+  margin: auto;
+  box-sizing: border-box;
+  background-color: Beige;
+  font-family: "Inter", sans-serif;
+}
+
+/* === Styly pro typografii === */
+h1 {
+  font-size: 4rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+a {
+  color: fuchsia;
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* === Styly pro navigaci === */
+nav {
+  display: flex;
+  justify-content: space-around;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+header {
+  margin-bottom: 2rem;
+}
+
+.banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.5rem solid black;
+}
+
+/* === Barevné třídy === */
+.red-text {
+  color: crimson;
+}
+
+.blue-text {
+  color: blue;
+}
+
+/* === Styly pro odkazy === */
+.disabled-link {
+  cursor: not-allowed;
+  opacity: 0.25;
+  user-select: none;
+}
+
+/* === Styly pro úkolový seznam === */
+.task-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  background-color: #fff38a;
+  border: 0.25rem solid black;
+}
+
+.task-list__item__title {
+  margin: 0;
+}
+
+.task-list__item--personal {
+  background-color: aqua;
+}
+
+.task-list__item--done {
+  background-color: palegreen;
+}
+
+/* === Styly pro tlačítka === */
+.button {
+  display: block;
+  width: 100%;
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-align: center;
+  cursor: pointer;
+  margin: 0 auto;
+  padding: 1rem;
+  color: white;
+  background-color: fuchsia;
+  border: 0.25rem solid black;
+
+  &:hover {
+    text-decoration: none;
+    background-color: purple;
+  }
+}
+
+/* === Styly pro formuláře === */
+form {
+  margin-bottom: 0.25rem 0;
+  padding: 1.5rem;
+  background-color: #fff38a;
+  border: 0.25rem solid black;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 0.25rem solid black;
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  resize: none;
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.error {
+  color: red;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
