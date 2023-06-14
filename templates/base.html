@@ -13,17 +13,29 @@
 
 <body>
   <header>
-    <div class="banner">
-      <h1>{% block title %} udělej.to{% endblock title %}</h1>
-      <a href="{{ url_for('logoff')  if session.get('id') and session.get('username') else url_for('login') }}">{{
-        "Odhlásit se" if session.get('id') and session.get('username') else "Přihlásit se" }}</a>
-      <a href="{{ '' if session.get('id') and session.get('username') else url_for('register') }}">{{
-        ""if session.get('id') and session.get('username') else "Registrovat" }}</a>
+    <div>
+      <ul class="horizontalList">
+        <li">
+          <a href="/">{% block title %} Udělej.to{% endblock title %}</a>
+          </li>
+      </ul>
     </div>
-    <nav>
-      <a class="red-text" href="{{ url_for('home')}}">sdílené 👨‍👩‍👧</a>
-      <a class="blue-text disabled-link">moje 🙋‍♂️</a>
-    </nav>
+    <div>
+      <ul class=" horizontalList">
+        <li>
+          <a href="{{ url_for('history')  if session.get('id') and session.get('username') else '' }}">{{
+            "Historie" if session.get('id') and session.get('username') else "" }}</a>
+        </li>
+        <li>
+          <a href="{{ '' if session.get('id') and session.get('username') else url_for('register') }}">{{
+            ""if session.get('id') and session.get('username') else "Registrovat" }}</a>
+        </li>
+        <li>
+          <a href="{{ url_for('logoff')  if session.get('id') and session.get('username') else url_for('login') }}">{{
+            "Odhlásit se" if session.get('id') and session.get('username') else "Přihlásit se" }}</a>
+        </li>
+      </ul>
+    </div>
   </header>
   <main>
     {% block content %}

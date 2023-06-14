@@ -3,14 +3,18 @@
 přihlas.se
 {% endblock title %}
 {% block content %}
+<h1 style="text-align: center;">Přihlásit se</h1>
 <form action="{{ url_for('login')}}" method="POST">
-  <label for="name">jméno</label>
+  <label for="name">Jméno</label>
   <input type="text" id="jmeno" name="name" required />
 
-  <label for="password">heslo</label>
+  <label for="password">Heslo</label>
   <input type="password" id="heslo" name="password" required />
 
-  <h4 style="color: red;">{{loginError}}</h4>
-  <button type="submit" class="button">přihlásit se</button>
+  <h4 style="color: red; text-align: center; margin: auto; display: block; margin-top: 1rem; font-weight: 900;">
+    {{loginError}}</h4>
+
+  <button type="submit" style="margin-top: 1rem;" class="button">přihlásit se</button>
+
 </form>
 {% endblock content %}

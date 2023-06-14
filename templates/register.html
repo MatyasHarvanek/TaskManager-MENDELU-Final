@@ -3,14 +3,18 @@
 registruj.se
 {% endblock title %}
 {% block content %}
+<h1 style="text-align: center;">Registrovat se</h1>
+
 <form action="{{url_for('register')}}" method="POST">
-  <label for="name">jméno</label>
+  <label for="name">Jméno</label>
   <input type="text" id="name" name="name" required />
 
-  <label for="password">heslo</label>
+  <label for="password">Heslo</label>
   <input type="password" id="password" name="password" required />
 
-  <h4 style="color: red;">{{error}}</h4>
-  <button type="submit" class="button">Registrovat se</button>
+  <h4 style="color: red; text-align: center; margin: auto; display: block; font-weight: 900; margin-top: 1rem;">
+    {{error}}</h4>
+
+  <button type="submit" style="margin-top: 1rem;" class="button">Registrovat se</button>
 </form>
 {% endblock content %}

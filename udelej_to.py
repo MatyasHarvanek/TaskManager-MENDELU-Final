@@ -17,7 +17,6 @@ app.secret_key = "supertajny"
 
 @app.route("/")
 def home():
-    print(db.get_tasks_without_user())
     return render_template("shared.html", tasks=db.get_tasks_without_user())
 
 
@@ -31,14 +30,26 @@ def add_shared():
     return render_template("add-shared.html")
 
 
-@app.route("/add-personal")
-def add_personal():
-    return render_template("add-personal.html")
-
-
 @app.route("/personal")
 def personal():
-    return render_template("personal.html")
+    if not loginHelper.isUserLogedIn(session=session):
+        return redirect(url_for('home'))
+
+    return render_template("personal.html", tasks=db.get_user_tasks(session['id']))
+
+
+@app.route("/add-personal", methods=['GET', 'POST'])
+def add_personal():
+    if not loginHelper.isUserLogedIn(session=session):
+        print("test from this fucking shit")
+        return redirect(url_for('home'))
+    if request.method == "POST":
+        name = request.form.get('name')
+        description = request.form.get('description')
+        db.create_task(name=name, description=description,
+                       user_id=session['id'])
+        return redirect(url_for('personal'))
+    return render_template("add-personal.html")
 
 
 @app.route("/done/<int:task_id>", methods=['GET'])
@@ -47,10 +58,31 @@ def done(task_id):
     return redirect(url_for('home'))
 
 
+@app.route("/history")
+def history():
+    if not loginHelper.isUserLogedIn(session=session):
+        return redirect(url_for('home'))
+
+    history = db.get_history(session['id'])
+    return render_template('history.html', tasks=history)
+
+
 @app.route("/undone/<int:task_id>", methods=['GET'])
 def undone(task_id):
     db.mark_task_as_undone(task_id=task_id)
     return redirect(url_for('home'))
+
+
+@app.route("/donepersonal/<int:task_id>", methods=['GET'])
+def donePersonal(task_id):
+    db.mark_task_as_done(task_id=task_id, user_id=session['id'])
+    return redirect(url_for('personal'))
+
+
+@app.route("/undonepersonal/<int:task_id>", methods=['GET'])
+def undonePersonal(task_id):
+    db.mark_task_as_undone(task_id=task_id, user_id=session['id'])
+    return redirect(url_for('personal'))
 
 
 @app.route("/login", methods=['GET', 'POST'])

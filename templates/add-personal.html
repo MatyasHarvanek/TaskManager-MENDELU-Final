@@ -1,11 +1,15 @@
-{% extends base.html %}
-      <form action="/index.html" method="get">
-        <label for="ukol">úkol</label>
-        <input type="text" id="ukol" name="ukol" required />
+{% extends 'base.html' %}
 
-        <label for="poznamka">poznámka</label>
-        <textarea id="poznamka" name="poznamka" rows="4"></textarea><br />
+{% block content %}
+<h1 style="text-align: center;">Přidat úkol</h1>
+<form action="{{url_for('add_personal')}}" method="post">
+  <label for="name">úkol</label>
+  <input type="text" id="name" name="name" required />
 
-        <button type="submit" class="button">přidat úkol</button>
-      </form>
 
+  <label for="description">poznámka</label>
+  <textarea id="description" name="description" rows="4"></textarea>
+  <button style="margin-top: 1rem;" type="submit" class="button">Přidat úkol</button>
+
+</form>
+{% endblock content %}

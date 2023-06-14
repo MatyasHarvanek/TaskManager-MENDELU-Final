@@ -1,154 +1,184 @@
-/* === Globální styly === */
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --blueOne: #39ace7;
+  --blueTwo: #0784b5;
+  --blackOne: #414c50;
+  --blackTwo: #2d383c;
+  --blackThree: #192428;
+  --balckTwoSlahsOne: #39474d;
 }
 
-html {
-  max-width: 90ch;
-  padding: 1.5rem;
-  margin: auto;
+* {
+  color: white;
+  font-family: roboto;
   box-sizing: border-box;
-  background-color: Beige;
-  font-family: "Inter", sans-serif;
-}
-
-/* === Styly pro typografii === */
-h1 {
-  font-size: 4rem;
-  font-weight: 900;
   margin: 0;
 }
 
-a {
-  color: fuchsia;
-  font-size: 1.25rem;
-  font-weight: 900;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-/* === Styly pro navigaci === */
-nav {
-  display: flex;
-  justify-content: space-around;
-  max-width: 90%;
-  margin: 0 auto;
+body {
+  margin: 0;
+  background-color: var(--blackThree);
 }
 
 header {
-  margin-bottom: 2rem;
-}
+  background-color: var(--blackTwo);
+  width: 100vw;
 
-.banner {
   display: flex;
   justify-content: space-between;
-  align-items: end;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 0.5rem solid black;
+  padding: 1rem;
+  position: absolute;
 }
 
-/* === Barevné třídy === */
-.red-text {
-  color: crimson;
+a {
+  text-decoration: none;
 }
 
-.blue-text {
-  color: blue;
+a:hover {
+  color: var(--blueOne);
+  font-weight: 400;
 }
 
-/* === Styly pro odkazy === */
-.disabled-link {
-  cursor: not-allowed;
-  opacity: 0.25;
-  user-select: none;
+ul {
+  list-style: none;
+  padding: 0;
 }
 
-/* === Styly pro úkolový seznam === */
+ul li {
+  display: inline-block;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+main {
+  position: relative;
+  top: 4rem;
+  width: 70vw;
+  background-color: var(--balckTwoSlahsOne);
+  margin: auto;
+  padding: 1rem;
+}
+
+.button {
+  margin: auto;
+  display: block;
+  text-align: center;
+  padding: 0.5rem;
+  background-color: var(--blueOne);
+  border-radius: 15px;
+  font-weight: 300;
+  border: none;
+  min-width: 150px;
+  font-size: 1.25rem;
+}
+
+.button:hover {
+  color: white;
+  font-weight: 400;
+  outline-style: solid;
+  outline-color: whitesmoke;
+  outline-width: 1px;
+}
+
 .task-list {
+  margin-top: 1rem;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
-  margin: 1rem 0;
-  padding: 0;
-  list-style: none;
+  gap: 1rem;
 }
 
-.task-list__item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem;
-  background-color: #fff38a;
-  border: 0.25rem solid black;
-}
-
-.task-list__item__title {
-  margin: 0;
-}
-
-.task-list__item--personal {
-  background-color: aqua;
-}
-
-.task-list__item--done {
-  background-color: palegreen;
-}
-
-/* === Styly pro tlačítka === */
-.button {
-  display: block;
-  width: 100%;
-  font-size: 1.25rem;
-  font-weight: 900;
-  text-align: center;
-  cursor: pointer;
-  margin: 0 auto;
+.task-list-item {
+  background-color: var(--blackOne);
   padding: 1rem;
-  color: white;
-  background-color: fuchsia;
-  border: 0.25rem solid black;
-
-  &:hover {
-    text-decoration: none;
-    background-color: purple;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* === Styly pro formuláře === */
+.checkBoxLikeButton {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-style: solid;
+  border-color: grey;
+  border-width: 2px;
+  border-radius: 15px;
+}
+
+.checkBoxLikeButton--Ticked {
+  background-color: greenyellow;
+  border-color: whitesmoke;
+}
+
 form {
-  margin-bottom: 0.25rem 0;
-  padding: 1.5rem;
-  background-color: #fff38a;
-  border: 0.25rem solid black;
+  width: 100%;
 }
 
 input,
 textarea {
+  display: inline;
   width: 100%;
-  border: 0.25rem solid black;
-  margin-bottom: 2rem;
-  padding: 0.5rem;
   resize: none;
-  font-family: inherit;
-  font-size: 1.25rem;
-  font-weight: 500;
+  outline: none;
+  border-radius: 15px;
+  padding: 0.5rem;
+  color: var(--blackThree);
+  font-size: 1.10rem;
+  border-style: none;
+  border-width: 1px;
 }
+
+input:focus,
+textarea:focus {
+  border-style: solid;
+  border-color: var(--blueOne);
+}
+
 
 label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
   font-size: 1.25rem;
-  font-weight: 900;
 }
 
-.error {
-  color: red;
-  font-size: 1.25rem;
-  font-weight: 900;
+@media only screen and (max-width: 1000px) {
+  .task-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.publicitySwitcher {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.publicitySwitcher-Item {
+  border-radius: 15px;
+  width: 100%;
+  background-color: transparent;
+  text-align: center;
+  padding: 0.5rem;
+  border-style: solid;
+  border-color: var(--blueOne);
+  border-width: 2px;
+}
+
+.publicitySwitcher-Item__Active {
+  background-color: var(--blueOne);
+  border-style: none;
+}
+
+.publicitySwitcher-Item__Active:hover {
+  color: white;
+}
+
+.publicitySwitcher-Item :hover {
+  background-color: var(--blackTwo);
 }

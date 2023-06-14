@@ -1,17 +1,22 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Přidej.to
+Přidej.to
 {% endblock %}
 
 {% block content %}
-      <form action="{{ url_for("add_shared") }}" method="POST">
-        <label for="name">úkol</label>
-        <input type="text" id="name" name="name" required />
+<h1 style="text-align: center;">Přidat úkol</h1>
+<form action="{{url_for('add_shared')}}" method="post">
+  <label for="name">úkol</label>
+  <input type="text" id="name" name="name" required />
 
-        <label for="description">poznámka</label>
-        <textarea id="description" name="description" rows="4"></textarea><br />
 
-        <button type="submit" class="button">přidat úkol</button>
-      </form>
+  <label for="description">poznámka</label>
+  <textarea id="description" name="description" rows="4"></textarea>
+  <button style="margin-top: 1rem;" type="submit" class="button">Přidat úkol</button>
+
+</form>
+
+
+
 {% endblock content %}

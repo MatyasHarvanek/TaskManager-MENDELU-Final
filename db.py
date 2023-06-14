@@ -73,6 +73,22 @@ def mark_task_as_done(task_id, user_id=None):
     conn.close()
 
 
+def get_history(user_id):
+    conn = get_db_connection()
+    c = conn.cursor()
+
+    c.execute('''
+        SELECT * FROM task
+        WHERE user_id IS NULL OR user_id = ?
+        ORDER BY is_done ASC, id DESC
+    ''', (user_id,))
+
+    tasks = c.fetchall()
+    conn.close()
+
+    return tasks
+
+
 def mark_task_as_undone(task_id, user_id=None):
     conn = get_db_connection()
     c = conn.cursor()
@@ -80,7 +96,7 @@ def mark_task_as_undone(task_id, user_id=None):
     if user_id:
         c.execute('''
             UPDATE task 
-            SET is_done = True
+            SET is_done = False
             WHERE id = ? AND user_id = ?
         ''', (task_id, user_id))
     else:

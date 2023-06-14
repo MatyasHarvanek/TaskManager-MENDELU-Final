@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}
+přihlas.se
+{% endblock title %}
+{% block content %}
+<ul class="task-list">
+    {% for task in tasks %}
+    <li class="task-list__item {{ " task-list__item--done" if task.is_done else "" }}">
+        <div class="task-list-item">
+            <div>
+                <h2 style="font-weight: 900;">{{ task.name }}</h2>
+                <h4 style="font-weight: 900;">{{ task.description }}</h4>
+                <h5>Úkol byl vytvořen: {{task.created_at}}</h5>
+            </div>
+
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock content %}

@@ -1,16 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-      <a class="button" href="{{ url_for("add_shared") }}">přidat úkol</a>
-      <ul class="task-list">
-      {% for task in tasks %}
-            <li class="task-list__item {{ "task-list__item--done" if task.is_done else "" }}">
-                <div>
-                    <h2 class="task-list__item__title ">{{ task.name }}</h2>
-                    <p>{{ task.description }}</p>
-                </div>
-            <a href="{{ url_for("undone" if task.is_done else "done",task_id=task.id) }}"> {{ "✅" if task.is_done else "🔲" }}</a>
-        </li>
-      {% endfor %}
-      </ul>
-{% endblock content %}
+{%if session.get('id') and session.get('username') %}
+<div class="publicitySwitcher">
+    <a class="publicitySwitcher-Item publicitySwitcher-Item__Active">Sdílené</a>
+    <a href="{{url_for('personal')}}" class="publicitySwitcher-Item">Soukromé</a>
+</div>
+{%endif%}
 
+<a class="button" href="{{ url_for('add_shared') }}">Přidat úkol</a>
+
+<ul class="task-list">
+    {% for task in tasks %}
+    <li class="task-list__item {{ " task-list__item--done" if task.is_done else "" }}">
+        <div class="task-list-item">
+            <div>
+                <h2 style="font-weight: 900;">{{ task.name }}</h2>
+                <h4 style="font-weight: 900;">{{ task.description }}</h4>
+            </div>
+            <a href="{{ url_for('undone' if task.is_done else  'done' ,task_id=task.id) }}"
+                class="checkBoxLikeButton {{'checkBoxLikeButton--Ticked' if task.is_done else '' }}">
+            </a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+{%endblock content %}
