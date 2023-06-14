@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% block title %}
-    přihlas.se
+registruj.se
 {% endblock title %}
 {% block content %}
-      <form action="/index.html" method="POST">
-        <label for="jmeno">jméno</label>
-        <input type="text" id="jmeno" name="jmeno" required />
+<form action="{{url_for('register')}}" method="POST">
+  <label for="name">jméno</label>
+  <input type="text" id="name" name="name" required />
 
-        <label for="heslo">heslo</label>
-        <input type="password" id="heslo" name="heslo" required />
+  <label for="password">heslo</label>
+  <input type="password" id="password" name="password" required />
 
-        <button type="submit" class="button">přihlásit se</button>
-      </form>
+  <h4 style="color: red;">{{error}}</h4>
+  <button type="submit" class="button">Registrovat se</button>
+</form>
 {% endblock content %}

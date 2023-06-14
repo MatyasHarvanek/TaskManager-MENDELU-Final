@@ -1,4 +1,5 @@
 import bcrypt
+import loginHelper
 from flask import (
     Flask,
     redirect,
@@ -14,32 +15,11 @@ app = Flask(__name__)
 app.secret_key = "supertajny"
 
 
-mock_tasks = [
-    {
-        "id": 0,
-        "name": "Vynést odpadky",
-        "description": "Prosím, fakt prosím lidi 🗑️",
-        "is_done": False,
-    },
-    {
-        "id": 1,
-        "name": "Vytřít podlahu",
-        "description": "V koupelně je to fakt síla 🤢",
-        "is_done": False,
-    },
-    {
-        "id": 2,
-        "name": "Koupit mléko 🥛",
-        "description": "Došlo a už nemáme žádné další",
-        "is_done": True,
-    },
-]
-
-
 @app.route("/")
 def home():
     print(db.get_tasks_without_user())
-    return render_template("shared.html", tasks=db.get_tasks_without_user(), headerLinkURL=url_for("login"), headerLinkText="Přihlásit")
+    return render_template("shared.html", tasks=db.get_tasks_without_user())
+
 
 @app.route("/add-shared",  methods=['GET', 'POST'])
 def add_shared():
@@ -48,41 +28,18 @@ def add_shared():
         description = request.form.get('description')
         db.create_task(name=name, description=description, user_id=None)
         return redirect(url_for('home'))
-    return render_template("add-shared.html", headerLinkURL=url_for("home"), headerLinkText="Domů")
+    return render_template("add-shared.html")
+
 
 @app.route("/add-personal")
 def add_personal():
-    return render_template("add-personal.html", headerLinkURL=url_for("home"), headerLinkText="Domů")
-
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-
-    if request.method == "GET":
-        if session.get('id') and session.get('username'):
-            return redirect(url_for('home'))
-        else:
-            return render_template("login.html", headerLinkURL=url_for("home"), headerLinkText="Domů")
-    else:
-        session['id'] = 1
-        session['username'] = "jou"
-        user = db.get_user(request.form['name'])
-        if user is None:
-            return render_template("login.html", headerLinkURL=url_for("home"), headerLinkText="Domů")
-        else:
-            if user['password'] == request.form["password"]:
-                session['id'] = user['id']
-                session['username'] = user['name']
-        print("user info" + str(user['password']))
-        return redirect(url_for('home'))
-
-
-
-
+    return render_template("add-personal.html")
 
 
 @app.route("/personal")
 def personal():
-    return render_template("personal.html", headerLinkURL=url_for("home"), headerLinkText="Domů")
+    return render_template("personal.html")
+
 
 @app.route("/done/<int:task_id>", methods=['GET'])
 def done(task_id):
@@ -92,10 +49,58 @@ def done(task_id):
 
 @app.route("/undone/<int:task_id>", methods=['GET'])
 def undone(task_id):
-
-    print("test")
     db.mark_task_as_undone(task_id=task_id)
     return redirect(url_for('home'))
+
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if request.method == "GET":
+        if loginHelper.isUserLogedIn(session=session):
+            return redirect(url_for('home'))
+        else:
+            return render_template("login.html")
+    else:
+        user = db.get_user(request.form['name'])
+        if user is None:
+            return render_template("login.html", loginError="Uživatelské jméno nebo heslo je špatné")
+        if not user['password'] == request.form["password"]:
+            return render_template("login.html", loginError="Uživatelské jméno nebo heslo je špatné")
+
+        # login has been valid
+        sendUserInfo(userId=user['id'], name=user['name'])
+        return redirect(url_for('home'))
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        if loginHelper.isUserLogedIn(session=session):
+            return redirect(url_for("home"))
+        else:
+            return render_template('register.html')
+
+    LoginValid = loginHelper.isUserLoginValid(
+        request.form["name"], request.form["password"])
+    if LoginValid.isValid:
+        db.create_user(request.form["name"], request.form["password"])
+        dbUser = db.get_user(request.form["name"])
+        sendUserInfo(userId=dbUser['id'], name=dbUser['name'])
+        return redirect(url_for("home"))
+
+    return render_template('register.html', error=LoginValid.message)
+
+
+@app.route('/logoff')
+def logoff():
+    session.clear()
+    return redirect(url_for('home'))
+
+
+def sendUserInfo(userId, name):
+    session['id'] = userId
+    session['username'] = name
+
 
 if __name__ == "__main__":
     app.run(debug=True)

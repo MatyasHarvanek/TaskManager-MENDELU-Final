@@ -22,6 +22,7 @@ def create_task(name, description, user_id=None):
     conn.commit()
     conn.close()
 
+
 def create_user(name, password):
 
     conn = get_db_connection()
@@ -70,6 +71,7 @@ def mark_task_as_done(task_id, user_id=None):
 
     conn.commit()
     conn.close()
+
 
 def mark_task_as_undone(task_id, user_id=None):
     conn = get_db_connection()
@@ -121,3 +123,15 @@ def get_user_tasks(user_id):
     conn.close()
 
     return tasks
+
+
+def checkIfUserExists(username):
+    conn = get_db_connection()
+    c = conn.cursor()
+    c.execute('''
+        SELECT name FROM user
+        WHERE name = ?
+    ''', [username])
+
+    user = c.fetchone()
+    return user is not None

@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>udělej.to</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../static/style.css" />
-  </head>
-  <body>
-    <header>
-      <div class="banner">
-        <h1>{% block title %} udělej.to{% endblock title %}</h1>
-        <a href="{{ headerLinkURL }}">{{ headerLinkText }}</a>
-      </div>
-      <nav>
-        <a class="red-text" href="{{ url_for("home") }}">sdílené 👨‍👩‍👧</a>
-        <a class="blue-text disabled-link">moje 🙋‍♂️</a>
-      </nav>
-    </header>
-    <main>
-        {% block content %}
-        {% endblock content %}
-    </main>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>udělej.to</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/style.css" />
+</head>
+
+<body>
+  <header>
+    <div class="banner">
+      <h1>{% block title %} udělej.to{% endblock title %}</h1>
+      <a href="{{ url_for('logoff')  if session.get('id') and session.get('username') else url_for('login') }}">{{
+        "Odhlásit se" if session.get('id') and session.get('username') else "Přihlásit se" }}</a>
+      <a href="{{ '' if session.get('id') and session.get('username') else url_for('register') }}">{{
+        ""if session.get('id') and session.get('username') else "Registrovat" }}</a>
+    </div>
+    <nav>
+      <a class="red-text" href="{{ url_for('home')}}">sdílené 👨‍👩‍👧</a>
+      <a class="blue-text disabled-link">moje 🙋‍♂️</a>
+    </nav>
+  </header>
+  <main>
+    {% block content %}
+    {% endblock content %}
+  </main>
+</body>
+
 </html>
